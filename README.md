@@ -13,7 +13,7 @@ Nvidia drivers: 535.161.07
 Cuda: 11.8
 ```
 
-We suggest creating virtual environments with all the required libraries using Conda. For the installation of Conda, please refer to [link](https://conda.io/projects/conda/en/latest/user-guide/install/linux.html).
+We suggest creating virtual environments with all the required libraries using Conda. For the installation of Conda, please refer to [the official documentation](https://conda.io/projects/conda/en/latest/user-guide/install/linux.html).
 
 To create the environment run the following command:
 

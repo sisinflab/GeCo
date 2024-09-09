@@ -26,14 +26,14 @@ conda env create -f environment.yml
 Once the installation finishes, you can activate the environment by running:
 
 ```sh
-conda activate cgcrm_env
+conda activate geco_env
 ```
 
 #### Using Venv
 
 ```sh
-python -m venv cgcrm_env
-source cgcrm_env/bin/activate
+python -m venv geco_env
+source geco_env/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -42,8 +42,8 @@ pip install -r requirements.txt
 Running the experiments on a CPU is not recommended; however, we also provide a requirements file for this scenario.
 
 ```sh
-python -m venv cgcrm_env
-source cgcrm_env/bin/activate
+python -m venv geco_env
+source geco_env/bin/activate
 pip install -r requirements_cpu.txt
 ```
 
@@ -68,10 +68,10 @@ For the FashionTaobaoTB dataset, images can be dowloaded from ... TODO
 
 ### Running the experiments
 
-As explained in the paper, to replicate the results of the proposed two-stage model, you should first train the _CIGM_ model and then the _CGCRM_ model. Ensure that you are always in the root directory of the project before running the experiments. Then run:
+As explained in the paper, to replicate the results of the proposed two-stage model, you should first train the _CIGM_ model and then the _GeCo_ model. Ensure that you are always in the root directory of the project before running the experiments. Then run:
 
 ```sh
-env PYTHONPATH=.
+export PYTHONPATH=.
 ```
 
 You can train _CIGM_ by running the following command:
@@ -81,17 +81,17 @@ CUBLAS_WORKSPACE_CONFIG=:4096:8 python3 CIGM/train_cigm.py --dataset dataset_nam
 
 You can also specify other training arguments, such as the number of epochs, the learning rate, and the number of workers. However, we have set all these by default according to our setup.
 
-Once the _CIGM_ model is ready, you can train the CGCRM model via the following command:
+Once the _CIGM_ model is ready, you can train the GeCo model via the following command:
 
 ```sh
-CUBLAS_WORKSPACE_CONFIG=:4096:8 python3 CGCRM/train_cgcrm.py --dataset dataset_name --alpha_values 0.25 --beta_values 0.75 --gamma_values 0.01 --tau_values 0.1
+CUBLAS_WORKSPACE_CONFIG=:4096:8 python3 GeCo/train_geco.py --dataset dataset_name --alpha_values 0.25 --beta_values 0.75 --gamma_values 0.01 --tau_values 0.1
 ```
 
-As with the training of _CIGM_, you can specify additional training arguments such as "dataset" and "num_workers". Additionally, you must specify some hyperparameters of the model: "alpha_values", "beta_values", "gamma_values", and "tau_values". For these arguments, the script accepts both lists of elements or single scalars, allowing for hyperparameter exploration. Once training finishes, the performance of the model on the test set is saved in a CSV file, which by default is saved in the _CGCRM_ directory with the name "out.csv".
+As with the training of _CIGM_, you can specify additional training arguments such as "dataset" and "num_workers". Additionally, you must specify some hyperparameters of the model: "alpha_values", "beta_values", "gamma_values", and "tau_values". For these arguments, the script accepts both lists of elements or single scalars, allowing for hyperparameter exploration. Once training finishes, the performance of the model on the test set is saved in a CSV file, which by default is saved in the _GeCo_ directory with the name "out.csv".
 
 ### Training the baselines
 
-Additionally, we provide the code for reimplementing all the baselines in the corresponding directory. The structure for the training scripts is exactly the same as the training file for the _CGCRM_ model. You can train the three baselines by running:
+Additionally, we provide the code for reimplementing all the baselines in the corresponding directory. The structure for the training scripts is exactly the same as the training file for the _GeCo_ model. You can train the three baselines by running:
 
 ```sh
 CUBLAS_WORKSPACE_CONFIG=:4096:8 python3 baselines/BPRDAE/train_bprdae.py --dataset dataset_name

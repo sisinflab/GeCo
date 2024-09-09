@@ -25,7 +25,7 @@ def _forward_impl(
     return features
 
 
-class CGCRM(nn.Module):
+class GeCo(nn.Module):
     def __init__(
             self,
             emb_dim: int = 64,
@@ -35,7 +35,7 @@ class CGCRM(nn.Module):
             gamma: float = 0.01,
             temperature: float = 0.07
     ):
-        super(CGCRM, self).__init__()
+        super(GeCo, self).__init__()
         self.resnet = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
         self.resnet.forward = types.MethodType(_forward_impl, self.resnet)
 
@@ -160,7 +160,7 @@ class CGCRM(nn.Module):
 
 if __name__ == '__main__':
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    model = CGCRM().to(device)
+    model = GeCo().to(device)
     img = torch.randn(16, 3, 128, 128).to(device)
 
     cost, pos_scores, neg_scores = model.get_cost_updates(img, img, img, img)

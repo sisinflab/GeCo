@@ -1,4 +1,4 @@
-name: cgcrm_env
+name: geco_env
 channels:
   - pytorch
   - nvidia
@@ -147,4 +147,4 @@ dependencies:
       - tifffile==2023.12.9
       - torch-fidelity==0.3.0
       - werkzeug==3.0.1
-prefix: cgcrm_env
+prefix: geco_env

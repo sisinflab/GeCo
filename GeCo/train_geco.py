@@ -1,7 +1,7 @@
 import os
 import random
 from tqdm import tqdm
-from model import CGCRM
+from model import GeCo
 from utils.dataset import FashionDataset, FashionTaobaoTBDataset
 import torch
 import numpy as np
@@ -26,7 +26,7 @@ torch.cuda.manual_seed_all(random_seed)
 torch.backends.cudnn.deterministic = True
 
 def train_step(
-        model: CGCRM,
+        model: GeCo,
         generator: Generator,
         train_dl: DataLoader,
         val_dl: DataLoader,
@@ -136,9 +136,9 @@ def train(
         os.mkdir(args.weights_dir)
 
     weight_path = os.path.join(args.weights_dir,
-                               f"cgcrm_{dataset}_{epochs}_{alpha}_{beta}_{gamma}_{temperature}.pt")
+                               f"geco_{dataset}_{epochs}_{alpha}_{beta}_{gamma}_{temperature}.pt")
 
-    cgcrm = CGCRM(
+    geco = GeCo(
         emb_dim=emb_dim,
         learning_rate=learning_rate,
         alpha=alpha,
@@ -198,30 +198,30 @@ def train(
 
     for epoch in tqdm(range(epochs), desc='Epochs'):
         auc_val = train_step(
-            model=cgcrm,
+            model=geco,
             generator=generator,
             train_dl=train_dl,
             val_dl=val_dl,
             epoch=epoch,
         )
 
-        cgcrm.scheduler.step()
+        geco.scheduler.step()
 
         if auc_val > best_auc_val:
             best_auc_val = auc_val
             torch.save(
                 {
                     'epoch': epoch,
-                    'model_state_dict': cgcrm.state_dict(),
-                    'optimizer_state_dict': cgcrm.optimizer.state_dict(),
+                    'model_state_dict': geco.state_dict(),
+                    'optimizer_state_dict': geco.optimizer.state_dict(),
                 },
                 weight_path
             )
     
-    del generator, cgcrm
+    del generator, geco
     torch.cuda.empty_cache()
 
-    cgcrm = CGCRM(
+    geco = GeCo(
         emb_dim=emb_dim,
         learning_rate=learning_rate,
         alpha=alpha,
@@ -230,8 +230,8 @@ def train(
         temperature=temperature
     ).to(device)
 
-    cgcrm.load_state_dict(torch.load(weight_path, map_location=device)['model_state_dict'])
-    cgcrm.eval()
+    geco.load_state_dict(torch.load(weight_path, map_location=device)['model_state_dict'])
+    geco.eval()
 
     generator = Generator().to(device)
     generator.load_state_dict(torch.load(generator_path, map_location=device)['model_state_dict'])
@@ -254,10 +254,10 @@ def train(
         )
 
     with torch.no_grad():
-        auc_1vs3 = roc_auc(test_dl, generator, cgcrm)
-        auc_1vs1 = roc_auc_1vs1(test_dl, generator, cgcrm)
-        mrr_1vs9 = mrr(cir_dl, generator, cgcrm)
-        mrr_1vsall = mrr_1vsAll(cir_dl, generator, cgcrm)
+        auc_1vs3 = roc_auc(test_dl, generator, geco)
+        auc_1vs1 = roc_auc_1vs1(test_dl, generator, geco)
+        mrr_1vs9 = mrr(cir_dl, generator, geco)
+        mrr_1vsall = mrr_1vsAll(cir_dl, generator, geco)
 
     return auc_1vs3, auc_1vs1, mrr_1vs9, mrr_1vsall, weight_path
 
@@ -422,7 +422,7 @@ def mrr_1vsAll(
 
 
 if __name__ == '__main__':
-    config = argparse.ArgumentParser(description="Training and evaluation script for CGCRM.")
+    config = argparse.ArgumentParser(description="Training and evaluation script for GeCo.")
     config.add_argument('--alpha_values', nargs='+', type=float, help='List of alpha values', required=True)
     config.add_argument('--beta_values', nargs='+', type=float, help='List of beta values', required=True)
     config.add_argument('--gamma_values', nargs='+', type=float, help='List of gamma values', required=True)
@@ -437,9 +437,9 @@ if __name__ == '__main__':
     config.add_argument('--train_batch_size', type=int, help="train batch size", default=64)
     config.add_argument('--valid_batch_size', type=int, help="valid batch size", default=16)
     config.add_argument('--num_workers', type=int, help="num workers", default=multiprocessing.cpu_count())
-    config.add_argument('--weights_dir', type=str, help="weights path", default=os.path.join(os.getcwd(), 'CGCRM', 'weights'))
+    config.add_argument('--weights_dir', type=str, help="weights path", default=os.path.join(os.getcwd(), 'GeCo', 'weights'))
     config.add_argument('--generator_dir', type=str, help="generator path", default=os.path.join(os.getcwd(), 'CIGM', 'weights'))
-    config.add_argument('--out_csv', type=str, help="path of the output csv", default=os.path.join(os.getcwd(), 'CGCRM', 'out.csv'))
+    config.add_argument('--out_csv', type=str, help="path of the output csv", default=os.path.join(os.getcwd(), 'GeCo', 'out.csv'))
 
     args = config.parse_args()
     alphas = args.alpha_values

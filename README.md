@@ -1,6 +1,7 @@
 # Fashion Image-to-Image Translation for Complementary Item Retrieval
 
-This repository contains the official codebase to reproduce the experiments of the article "_Fashion Image-to-Image Translation for Complementary Item Retrieval_".
+This repository contains the official codebase to reproduce the experiments of the article "_Fashion Image-to-Image Translation for Complementary Item Retrieval_". The codebase was developed and tested on Ubuntu 22.04 LTS; however, it can be executed on other operating systems with the necessary adjustments to environment variables, activation of Python environments, or configuration of additional utilities (e.g., unzip).
+
 
 ## Usage
 
@@ -12,6 +13,7 @@ The experiments can be run on both CPU and GPU, however, we highly recommend usi
 Nvidia drivers: 535.161.07
 Cuda: 11.8
 ```
+#### Using Conda
 
 We suggest creating virtual environments with all the required libraries using Conda. For the installation of Conda, please refer to [the official documentation](https://conda.io/projects/conda/en/latest/user-guide/install/linux.html).
 
@@ -25,6 +27,24 @@ Once the installation finishes, you can activate the environment by running:
 
 ```sh
 conda activate cgcrm_env
+```
+
+#### Using Venv
+
+```sh
+python -m venv cgcrm_env
+source cgcrm_env/bin/activate
+pip install -r requirements.txt
+```
+
+#### Using the CPU
+
+Running the experiments on a CPU is not recommended; however, we also provide a requirements file for this scenario.
+
+```sh
+python -m venv cgcrm_env
+source cgcrm_env/bin/activate
+pip install -r requirements_cpu.txt
 ```
 
 ### Datasets

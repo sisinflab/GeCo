@@ -24,15 +24,15 @@ class FashionTaobaoTBDataset(Dataset):
         self.img_size = img_size
 
         if mode == 'train':
-            f = os.path.join(root_path, 'files/train_no_dup_1vs9.csv')
+            f = os.path.join(root_path, os.path.join('files', 'train_no_dup_1vs9.csv'))
             self.data = pd.read_csv(f)
 
         elif mode == 'valid':
-            f = os.path.join(root_path, 'files/valid_no_dup_1vs9.csv')
+            f = os.path.join(root_path, os.path.join('files', 'valid_no_dup_1vs9.csv'))
             self.data = pd.read_csv(f)
             
         elif mode == 'test' or mode == 'CIR':
-            f = os.path.join(root_path, 'files/test_disj.csv')
+            f = os.path.join(root_path, os.path.join('files', 'test_disj.csv'))
             self.data = pd.read_csv(f)
 
         else:
@@ -114,13 +114,13 @@ class FashionDataset(Dataset):
         self.img_size = img_size
 
         if not name == 'expreduced':
-            train_file = 'files/traindata_unique.csv'
-            valid_file = 'files/devdata_tops.csv'
-            test_file = 'files/testdata_tops.csv'
+            train_file = os.path.join('files', 'traindata_unique.csv')
+            valid_file = os.path.join('files', 'devdata_tops.csv')
+            test_file = os.path.join('files', 'testdata_tops.csv')
         else:
-            train_file = 'files/traindata_unique_1.csv'
-            valid_file = 'files/devdata_tops_reduced_rs1.csv'
-            test_file = 'files/testdata_tops_reduced_rs1.csv'
+            train_file = os.path.join('files', 'traindata_unique_1.csv')
+            valid_file = os.path.join('files', 'devdata_tops_reduced_rs1.csv')
+            test_file = os.path.join('files', 'testdata_tops_reduced_rs1.csv')
 
         if mode == 'train':
             f = os.path.join(root_path, train_file)

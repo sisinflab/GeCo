@@ -437,9 +437,9 @@ if __name__ == '__main__':
     config.add_argument('--train_batch_size', type=int, help="train batch size", default=64)
     config.add_argument('--valid_batch_size', type=int, help="valid batch size", default=16)
     config.add_argument('--num_workers', type=int, help="num workers", default=multiprocessing.cpu_count())
-    config.add_argument('--weights_dir', type=str, help="weights path", default=os.path.join(os.getcwd(), 'CGCRM/weights'))
-    config.add_argument('--generator_dir', type=str, help="generator path", default=os.path.join(os.getcwd(), 'CIGM/weights'))
-    config.add_argument('--out_csv', type=str, help="path of the output csv", default=os.path.join(os.getcwd(), 'CGCRM/out.csv'))
+    config.add_argument('--weights_dir', type=str, help="weights path", default=os.path.join(os.getcwd(), os.path.join('CGCRM', 'weights')))
+    config.add_argument('--generator_dir', type=str, help="generator path", default=os.path.join(os.getcwd(), os.path.join('CIGM', 'weights')))
+    config.add_argument('--out_csv', type=str, help="path of the output csv", default=os.path.join(os.getcwd(), os.path.join('CGCRM', 'out.csv')))
 
     args = config.parse_args()
     alphas = args.alpha_values

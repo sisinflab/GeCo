@@ -256,7 +256,7 @@ if __name__ == '__main__':
     config.add_argument('--train_batch_size', type=int, help="train batch size", default=64)
     config.add_argument('--valid_batch_size', type=int, help="valid batch size", default=16)
     config.add_argument('--num_workers', type=int, help="num workers", default=multiprocessing.cpu_count())
-    config.add_argument('--weights_dir', type=str, help="weights path", default=os.path.join(os.getcwd(), os.path.join('CIGM', 'weights')))
+    config.add_argument('--weights_dir', type=str, help="weights path", default=os.path.join(os.getcwd(), 'CIGM', 'weights'))
     config.add_argument('--save_some_samples', type=str, help="path for saving samples", default=None)
 
     args = config.parse_args()

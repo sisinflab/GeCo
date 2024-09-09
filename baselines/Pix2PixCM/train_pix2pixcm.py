@@ -615,8 +615,8 @@ if __name__ == '__main__':
     config.add_argument('--num_workers', type=int, help="Dataloader workers.", default=multiprocessing.cpu_count())
     config.add_argument('--img_size', type=int, help="Image Size.", default=64)
     config.add_argument('--save_some_samples', type=str, help="Path where to save some batch images.", default=None)
-    config.add_argument('--out_csv', type=str, help="path of the output csv", default=os.path.join(os.getcwd(), 'baselines/Pix2PixCM/out.csv'))
-    config.add_argument('--weights_dir', type=str, help="weights path", default=os.path.join(os.getcwd(), 'baselines/Pix2PixCM/weights'))
+    config.add_argument('--out_csv', type=str, help="path of the output csv", default=os.path.join(os.getcwd(), 'baselines', 'Pix2PixCM', 'out.csv'))
+    config.add_argument('--weights_dir', type=str, help="weights path", default=os.path.join(os.getcwd(), 'baselines', 'Pix2PixCM', 'weights'))
 
     args = config.parse_args()
 

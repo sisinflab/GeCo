@@ -23,7 +23,7 @@ const progressBar = new cliProgress.SingleBar({
 
 // Read dataset.csv
 const results: DatasetRecord[] = [];
-fs.createReadStream('./item_http.csv')
+fs.createReadStream('./items_url.csv')
   .pipe(csv())
   .on('data', (data: any) => results.push(data))
   .on('end', () => processDataset(results));

@@ -64,7 +64,22 @@ unzip ./fashion_recommendation_tkde2018_code_dataset/img.zip -d ./datasets/ExpRe
 unzip ./fashion_recommendation_tkde2018_code_dataset/FashionVC/img.zip -d ./datasets/FashionVC
 ```
 
-For the FashionTaobaoTB dataset, images can be dowloaded from ... TODO
+To download the images for the FashionTaobaoTB dataset, make sure Node.js is installed on your machine. Then, proceed with the following steps:
+
+```sh
+cd ./datasets/FashionTaobao-TB
+npm init -y
+npm install superagent csv-parser cli-progress
+npm install -g typescript
+npm install -g tsc
+tsc index.ts
+node index.js
+```
+
+After the download finishes, you need to preprocess the images. Please, run the following command to resize the images:
+```sh
+python3 resize_imgs.py
+```
 
 ### Running the experiments
 

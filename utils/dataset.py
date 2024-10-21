@@ -38,8 +38,7 @@ class FashionTaobaoTBDataset(Dataset):
         else:
             raise ValueError("mode should be 'train', 'valid' or 'test'")
 
-        self.tshirt_dir = os.path.join(root_path, 'tshirts')
-        self.pants_dir = os.path.join(root_path, 'pants')
+        self.img_dir = os.path.join(root_path, 'img')
 
     def __getitem__(
             self,
@@ -48,14 +47,14 @@ class FashionTaobaoTBDataset(Dataset):
         
         data = self.data.loc[index]
 
-        tshirt_image = self.transform(Image.open(os.path.join(self.tshirt_dir, str(data['tshirt']) + '.jpg')).convert('RGB'))
-        gt_pant = self.transform(Image.open(os.path.join(self.pants_dir, str(data['positive_pant']) + '.jpg')).convert('RGB'))
+        tshirt_image = self.transform(Image.open(os.path.join(self.img_dir, str(data['tshirt']) + '.jpg')).convert('RGB'))
+        gt_pant = self.transform(Image.open(os.path.join(self.img_dir, str(data['positive_pant']) + '.jpg')).convert('RGB'))
 
         if not self.mode == 'CIR':
             neg_imgs = torch.empty(3, 3, self.img_size, self.img_size)
 
             for i in range(len(neg_imgs)):
-                neg_imgs[i] = self.transform(Image.open(os.path.join(self.pants_dir, str(data[f'neg_{i+1}']) + '.jpg')).convert('RGB'))
+                neg_imgs[i] = self.transform(Image.open(os.path.join(self.img_dir, str(data[f'neg_{i+1}']) + '.jpg')).convert('RGB'))
             
             dic = {
                 'tshirt_image': tshirt_image,
@@ -72,7 +71,7 @@ class FashionTaobaoTBDataset(Dataset):
             neg_imgs = torch.empty(9, 3, self.img_size, self.img_size)
 
             for i in range(len(neg_imgs)):
-                neg_imgs[i] = self.transform(Image.open(os.path.join(self.pants_dir, str(data[f'neg_{i+1}']) + '.jpg')).convert('RGB'))
+                neg_imgs[i] = self.transform(Image.open(os.path.join(self.img_dir, str(data[f'neg_{i+1}']) + '.jpg')).convert('RGB'))
             
             dic = {
                 'tshirt_image': tshirt_image,

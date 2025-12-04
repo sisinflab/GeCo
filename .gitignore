@@ -1,0 +1,13 @@
+__pycache__/
+dataset
+weights
+.idea
+.vscode
+training_batches
+*.out
+*.csv
+*.log
+img
+*.png
+*.jpg
+*jpeg
